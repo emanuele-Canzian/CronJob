@@ -1,6 +1,7 @@
 from pyexpat.errors import messages
 
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from passlib.hash import pbkdf2_sha256
@@ -25,7 +26,7 @@ def login_user(request):
         if user is not None:
             login(request, user)
             messages.success(request, 'You have been logged in.')
-            return redirect('cron')
+            return redirect('index')
         else:
             messages.error(request, 'Incorrect Info')
             return redirect('login')
@@ -71,38 +72,41 @@ def cron(request):
         auth = request.POST.get('auth')
         if auth == 'on':
             auth = True
+            username = request.POST.get('username')
+            password = request.POST.get('password')
+
+            if password != '':
+                enc_password = pbkdf2_sha256.encrypt(password, rounds="12000", salt_size=32)
+            else:
+                enc_password = ''
+            if auth == 'on' and username == '' or password == '':
+                messages.error(request, 'wen http aktiviert ist müssen sie einen benutzer und Passwort eingeben')
+                return render(request, 'Cronjob_Dev/cron.html')
         if auth is None:
             auth = False
 
-        username = request.POST.get('username')
-
-        password = request.POST.get('password')
-        if password != '':
-            enc_password = pbkdf2_sha256.encrypt(password, rounds="12000", salt_size=32)
-        else:
-            enc_password = ''
-
-        if auth == 'on' and username == '' or password == '':
-            messages.error(request, 'wen http aktiviert ist müssen sie einen benutzer und Passwort eingeben')
-            return render(request, 'Cronjob_Dev/cron.html')
+        print("hallllllllllllllloooooooooooo", auth)
 
         auswahl = request.POST.get('ausführung')
+        username = request.POST.get('username')
+        password = request.POST.get('password')
         if auswahl == '1':
-            minute = request.POST.get('mins')
-            minute = tablefill.minute
+            minute = request.POST.get('min1')
+            tablefill.minute = minute
         if auswahl == '2':
-            hour = request.POST.get('hours')
-            hour = tablefill.hour
-            minute = request.POST.get('minutes')
-            minute = tablefill.minute
+            hour = request.POST.get('hour1')
+            tablefill.hour = hour
+            minute = request.POST.get('min2')
+            tablefill.minute = minute
         if auswahl == '3':
-            day = request.POST.get('days')
-            day = tablefill.dayOfMonth
-            hour = request.POST.get('hour')
-            hour = tablefill.hour
-            minute = request.POST.get('minut')
-            minute = tablefill.minute
+            day = request.POST.get('day')
+            tablefill.dayOfMonth = day
+            hour = request.POST.get('hour2')
+            tablefill.hour = hour
+            minute = request.POST.get('min3')
+            tablefill.minute = minute
 
+        print("HEREE ")
         tablefill.title = title
         tablefill.url = url
         tablefill.username = username
@@ -111,6 +115,6 @@ def cron(request):
 
         tablefill.save()
 
-        return render(request, 'Cronjob_Dev/cron.html')
+        return render(request, 'Cronjob_Dev/index.html')
     else:
         return render(request, 'Cronjob_Dev/cron.html')

@@ -8,9 +8,9 @@ class CronJob(models.Model):
 
     auth = models.BooleanField(default=False)
 
-    username = models.CharField(max_length=30, null=False, default='')
+    username = models.CharField(max_length=30, null=True, default='')
 
-    password = models.CharField(max_length=30, null=False, default='')
+    password = models.CharField(max_length=30, null=True, default='')
 
     minute = models.CharField(max_length=30, null=False, default='')
 
@@ -21,3 +21,6 @@ class CronJob(models.Model):
     month = models.CharField(max_length=30, null=False, default='')
 
     weekday = models.CharField(max_length=30, null=False, default='')
+
+    def __str__(self):
+        return f"{self.title} \t - {self.url}"
