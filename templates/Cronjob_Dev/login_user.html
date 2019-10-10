@@ -1,0 +1,20 @@
+{% extends 'Cronjob_Dev/base.html' %}
+
+{% block content %}
+    <div>
+        <nav class="navbar"><a href=""></a></nav>
+            <div>
+                    <h1>LOGIN</h1>
+                <form method="POST" class="loginform">
+                    {% csrf_token %}
+                    <div>
+                        <input type="text" placeholder="user" name="username">
+                    </div>
+                    <div>
+                        <input type="password" placeholder="Password" name="password">
+                    </div>
+                    <button type="submit">Login</button>
+                </form>
+            </div>
+    </div>
+{% endblock %}

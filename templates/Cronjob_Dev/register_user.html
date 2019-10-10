@@ -1,0 +1,30 @@
+{% extends 'Cronjob_Dev/base.html' %}
+
+
+    {% block content %}
+
+        <h1>Register</h1>
+        <div>
+            <div>
+                <form action="{% url 'register' %}" method="POST">
+                    {% csrf_token %}
+                        {% if from.errors %}
+                          <div>
+                            <button>
+                                <small><sup></sup></small>
+                            </button>
+                            <p></p>
+                            {% for field in form %}
+                                {% if field.errors %}
+                                    {{ field.errors }}
+                                {% endif %}
+                            {% endfor %}
+                          </div>
+                        {% endif %}
+                        {{ form.as_p }}
+                    <button type="submit">Register</button>
+                </form>
+            </div>
+        </div>
+
+    {% endblock %}

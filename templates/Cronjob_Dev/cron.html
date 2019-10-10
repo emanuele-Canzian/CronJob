@@ -1,0 +1,118 @@
+{% extends 'Cronjob_Dev/base.html' %}
+
+{% block content %}
+
+ <form method="post">
+    {% csrf_token %}
+    <div class="container-all">
+
+        <div class="hallo">
+            <h1>Cron-Job erstellen</h1>
+            <p class="bla">Füllen sie das folgende Formular aus um einen Cron-Job anzulegen. Es werden sowohl http- als auch https-URL's unterstützt. Falls die URL mit HTTP-Autentifizierung gesichert ist(z.B."htaccess-Passwordschutz"),hinterlegen Sie bitte auch die ensprechenden zugangsdaten damit wir die Webseite korrekt abrucfen können</p>
+           <div> <i>Hinweis:</i><p>Weitere erweitere Einstellungen für ihren Cron-Job können sie nach dem Anlegen vornehmen,indem sie den Job bearbeiten.</p>
+           </div>
+        </div>
+
+        <div class="container1">
+            <input type="text" name="title" placeholder="Title" class="title1">
+            <input type="text" name="url" placeholder="Http://" class="title1">
+        </div>
+        <div class="container2">
+            <div class="autent">
+                <input type="checkbox" class="checkboxx" name="auth"><p>Erfordert HTTP-Autentifizierung</p>
+            </div>
+                <div class="containerim">
+                    <div class="flosidee1">
+                        <p>Username</p>
+                        <input type="text" name="username" class="sla">
+                    </div>
+                    <div class="flosidee2">
+                    <p>Password</p>
+                <input type="text" name="password" class="sla">
+            </div>
+          </div>
+        </div>
+        <div class="container3">
+            <div class="firstAusführung">
+            <input type="radio" name="ausführung" class="abstand" value="1"> Alle
+                <div>
+
+                      <select name="mins">
+                        <option value="15">15</option>
+                        <option value="30">30</option>
+                        <option value="45">45</option>
+                        <option value="60">60</option>  <p>minuten</p>
+                      </select> minuten
+                </div>
+            </div>
+
+
+                   <div class="secondAusführung">
+                    <input type="radio"name="ausführung"class="abstand" value="2"> jeden tag um
+                       <select name="hours">
+                        <option value="15">6</option>
+                        <option value="30">12</option>
+                        <option value="45">18</option>
+                        <option value="60">24</option>
+                       </select>
+                       <p>:</p>
+                       <select name="minutes">
+                        <option value="15">15</option>
+                        <option value="30">30</option>
+                        <option value="45">45</option>
+                        <option value="60">60</option>
+                       </select>
+
+                   </div>
+
+                   <div class="thirdAusführung">
+                    <input type="radio"name="ausführung"class="abstand" value="3">
+                       <select name="days">
+                        <option value="15">1</option>
+                        <option value="30">2</option>
+                        <option value="45">3</option>
+                        <option value="60">4</option>
+                       </select>
+                       <p>des Monats</p>
+                       <select name="hour">
+                        <option value="15">15</option>
+                        <option value="30">30</option>
+                        <option value="45">45</option>
+                        <option value="60">60</option>
+                       </select>
+                        <p>:</p>
+                       <select name="minut">
+                        <option value="15">15</option>
+                        <option value="30">30</option>
+                        <option value="45">45</option>
+                        <option value="60">60</option>
+                       </select>
+                   </div>
+
+                   <div class="fourthAusführung">
+                    <input type="radio"name="ausführung"class="abstand" value="4">
+                       <P>Benutzerdefiniert</P>
+                   </div>
+            </div>
+
+        <div class="container4">
+            <div class="benachrchtigung">
+                <p class="thelast">Mich per Email benachrichtigen bei:</p>
+               <div class="ben"><input type="checkbox" class="inline1"><span class="inline">Fehlschlag es Jobs</span> </div>
+                 <div class="ben"><input type="checkbox" class="inline1"><span class="inline">erfolgreichem Abrucf nach Vorherigem Fehlschlag</span> </div>
+                 <div class="ben"><input type="checkbox" class="inline1"><span class="inline">automatischer Deaktivierung wegen zu viler fehlschläge</span> </div>
+            </div>
+        </div>
+        <div class="container5">
+            <div class="allgemein">
+                <input type="checkbox" class="inline" > <p class ="inline">Antwort Speichern</p>
+            </div>
+        </div>
+       <p>mit der Erstellung des Cron-jobs erklären Sie, dass Sie entweder der Inhaber der abzurufender Webseite sind oder im Einverständnis des Inhabers hanndelt</p>
+            <button name="button" class="button" type="submit">CronJob Erstellen</button>
+
+            </div>
+        </div>
+    </form>
+
+{% endblock %}
