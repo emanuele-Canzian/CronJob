@@ -3,18 +3,24 @@
 {% block content %}
     <div>
         <nav class="navbar"><a href=""></a></nav>
-            <div>
-                    <h1>LOGIN</h1>
-                <form method="POST" class="loginform">
-                    {% csrf_token %}
-                    <div>
-                        <input type="text" placeholder="user" name="username">
+        <div>
+            <h1>LOGIN</h1>
+            <form method="POST" class="loginform">
+                {% csrf_token %}
+
+                <!-- login -->
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="usercon">Username</label>
+                        <input type="text" class="form-control" id="usercon" name="username">
                     </div>
-                    <div>
-                        <input type="password" placeholder="Password" name="password">
+                    <div class="form-group col-md-6">
+                        <label for="pwcon">Password</label>
+                        <input type="password" class="form-control" id="pwcon" name="password">
                     </div>
-                    <button type="submit">Login</button>
-                </form>
-            </div>
+                </div>
+                <button class="btn btn-primary btn-lg" type="submit">Login</button>
+            </form>
+        </div>
     </div>
 {% endblock %}

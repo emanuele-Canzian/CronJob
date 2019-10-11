@@ -33,9 +33,9 @@ def login_user(request):
     else:
         return render(request, 'Cronjob_Dev/login_user.html', {})
 
+    def cron(request):
 
-def cron(request):
-    return render(request, 'Cronjob_Dev/cron.html')
+        return render(request, 'Cronjob_Dev/cron.html')
 
 
 def register_user(request):
@@ -48,7 +48,7 @@ def register_user(request):
             user = authenticate(username=username, password=password)
             login(request, user)
             messages.success(request, 'u have been registet')
-            return redirect('cron')
+            return redirect('index')
 
     else:
         form = SignUpForm()
@@ -62,8 +62,16 @@ def logout_user(request):
     messages.success(request, 'You have been logout')
     return redirect('index')
 
+def screen(request):
+    all_records = CronJob.objects.all
+    return render(request, 'Cronjob_Dev/screen.html', {'all_records': all_records})
 
-def cron(request):
+
+
+
+
+def index(request):
+
     if request.method == 'POST':
         tablefill = CronJob()
         title = request.POST.get('title')
@@ -81,40 +89,40 @@ def cron(request):
                 enc_password = ''
             if auth == 'on' and username == '' or password == '':
                 messages.error(request, 'wen http aktiviert ist müssen sie einen benutzer und Passwort eingeben')
-                return render(request, 'Cronjob_Dev/cron.html')
+                return render(request, 'Cronjob_Dev/index.html')
         if auth is None:
             auth = False
-
-        print("hallllllllllllllloooooooooooo", auth)
 
         auswahl = request.POST.get('ausführung')
         username = request.POST.get('username')
         password = request.POST.get('password')
-        if auswahl == '1':
+        if auswahl == 'firstbut':
             minute = request.POST.get('min1')
-            tablefill.minute = minute
-        if auswahl == '2':
-            hour = request.POST.get('hour1')
-            tablefill.hour = hour
-            minute = request.POST.get('min2')
-            tablefill.minute = minute
-        if auswahl == '3':
-            day = request.POST.get('day')
-            tablefill.dayOfMonth = day
-            hour = request.POST.get('hour2')
-            tablefill.hour = hour
-            minute = request.POST.get('min3')
-            tablefill.minute = minute
 
-        print("HEREE ")
+            tablefill.minute = minute
+            tablefill.cronejob = minute + " *" + " *" + " *" + " *"
+
+        if auswahl == 'secondbut':
+            hour = request.POST.get('hour1')
+            minute = request.POST.get('min2')
+            tablefill.cronejob = minute + hour + " *" + " *" + " *"
+
+        if auswahl == 'thirdbut':
+            day = request.POST.get('day')
+            hour = request.POST.get('hour2')
+            minute = request.POST.get('min3')
+            tablefill.cronejob = minute + hour + day + " *" + " *"
+
+
+
         tablefill.title = title
         tablefill.url = url
         tablefill.username = username
         tablefill.password = password
         tablefill.auth = auth
-
         tablefill.save()
 
         return render(request, 'Cronjob_Dev/index.html')
     else:
-        return render(request, 'Cronjob_Dev/cron.html')
+        return render(request, 'Cronjob_Dev/index.html')
+

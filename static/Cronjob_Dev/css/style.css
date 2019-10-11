@@ -1,0 +1,13 @@
+
+
+.nbc{
+    background-color: #ffffff;
+}
+#border2{
+    display: none;
+}
+.w-15{
+    width: 15% !important;
+    border-radius: .25rem;
+    border: 1px solid #ced4da;
+}

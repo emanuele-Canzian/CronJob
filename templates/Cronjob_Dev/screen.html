@@ -1,0 +1,26 @@
+{% extends 'Cronjob_Dev/base.html' %}
+{% block content %}
+{% if all_records %}
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Title</th>
+            <th scope="col">Url</th>
+            <th scope="col">CronJob</th>
+        </tr>
+        </thead>
+        {% for record in all_records %}
+        <tbody>
+        <tr>
+            <th scope="row">{{ record.id }}</th>
+            <td>{{ record.title }}</td>
+            <td>{{ record.url }}</td>
+            <td>{{ record.cronejob }}</td>
+        </tr>
+        </tbody>
+    {% endfor %}
+    </table>
+
+{% endif %}
+{% endblock %}

@@ -22,5 +22,9 @@ class CronJob(models.Model):
 
     weekday = models.CharField(max_length=30, null=False, default='')
 
+    cronejob = models.CharField(max_length=30, null=True)
+
+
+
     def __str__(self):
-        return f"{self.title} \t - {self.url}"
+        return f"{self.title} - {self.url}"
