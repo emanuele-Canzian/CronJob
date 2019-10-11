@@ -62,9 +62,7 @@ def logout_user(request):
     messages.success(request, 'You have been logout')
     return redirect('index')
 
-def screen(request):
-    all_records = CronJob.objects.all
-    return render(request, 'Cronjob_Dev/screen.html', {'all_records': all_records})
+
 
 
 
@@ -74,6 +72,7 @@ def index(request):
 
     if request.method == 'POST':
         tablefill = CronJob()
+        tablefill.user_id = request.user.id
         title = request.POST.get('title')
         url = request.POST.get('url')
 
@@ -126,3 +125,8 @@ def index(request):
     else:
         return render(request, 'Cronjob_Dev/index.html')
 
+
+def screen(request):
+    all_user_records = CronJob.objects.filter(user_id=request.user.id)
+    print(all_user_records)
+    return render(request, 'Cronjob_Dev/screen.html', {'all_records': all_user_records})

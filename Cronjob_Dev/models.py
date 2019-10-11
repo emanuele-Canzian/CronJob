@@ -3,6 +3,7 @@ from django.db import models
 
 
 class CronJob(models.Model):
+
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     title = models.CharField(max_length=128, null=False, default='')
@@ -27,6 +28,8 @@ class CronJob(models.Model):
 
     cronejob = models.CharField(max_length=30, null=True)
 
+    class meta:
+        ordering = ['-id']
 
 
     def __str__(self):
